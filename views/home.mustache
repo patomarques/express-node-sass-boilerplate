@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Contagem de Ciclistas</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="/js/main.js"></script>
+    <script>
+
+        function getDataCouting() {
+            var urlCouting = "https://api.plataforma.ameciclo.org/contagens/v1/cyclist-count";
+
+            return fetch(urlCouting)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    return data;
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <header class="header-content">
+        <div class="container">
+            <div class="row">
+                <div class="hidden-sm col-md-4"></div>
+                <div class="col-6 col-md-4 text-center">
+                    <div class="logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 text-right">
+                    <button class="menu hidden" aria-label="Mobile Menu">
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-fullscreen hidden">
+        <ul class="menu-full">
+            <li class="menu-item">
+                <a href="/" class="menu-link">Agenda</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" class="menu-link">Quem Somos</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" class="menu-link">Projetos</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" class="menu-link">Biciclopedia</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" class="menu-link">Contato</a>
+            </li>
+        </ul>
+    </div>
+
+    <section id="section-banner" class="banner-home">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="title-logo">Contagem de Ciclistas</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-counter-blocks" class="container-full">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col col-sm-6 col-md-3">
+                    <div class="box-counter">
+                        <div class="icon icon-bikers"></div>
+                        <span class="label-info">Total de <br>Ciclistas</span>
+                        <!-- <span class="count-high">33.90%</span> -->
+                        <div class="count">77.640</div>
+                    </div>
+                </div>
+                <div class="col col-sm-6 col-md-3">
+                    <div class="box-counter">
+                        <div class="icon icon-counters"></div>
+                        <span class="label-info">Contagens <br>Realizadas</span>
+                        <div class="count">39</div>
+                    </div>
+                </div>
+                <div class="col col-sm-6 col-md-3">
+                    <div class="box-counter">
+                        <div class="icon icon-points"></div>
+                        <span class="label-info">Pontos <br>Monitorados</span>
+                        <div class="count">25</div>
+                    </div>
+                </div>
+                <div class="col col-sm-6 col-md-3">
+                    <div class="box-counter">
+                        <div class="icon icon-maximum"></div>
+                        <span class="label-info">Máximo em <br>um ponto</span>
+                        <div class="count">4305</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <section id="section-how-do-works" class="mt-5 mb-5 bg-dark-green">
+            <div class="container text-center">
+                <div class="row pb-5">
+                    <div class="col">
+                        <h3 class="title-section">Como funciona nossas contagens?</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col offset-md-2 col-md-8">
+                        <h4 class="content-information">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+                            odit nobis rem dolor, ea ratione, inventore dolorem ex ad vitae cumque est tempora veritatis
+                            debitis nostrum odio laudantium illo voluptatem.</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-datasearch" class="container-search">
+            <div class="container">
+                <div class="row text-center pb-3">
+                    <div class="col">
+                        <h3 class="title-section">Faça uma pesquisa geral na nossa base de dados</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="content-search">
+                            <input type="text" class="input-search" placeholder="Digite aqui a sua busca...">
+                            <!-- <button class="btn btn-search">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button> -->
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="section-general-datas" class="mt-5 mb-5 hidden">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <div class="h3 section-title">Alguns Dados Gerais</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Mulheres</span>
+                            <span class="count-high">33.90%</span>
+                            <div class="lbl-info">8%</div>
+                        </div>
+
+                    </div>
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Crianças e Adolescentes</span>
+                            <div class="lbl-info">1,85%</div>
+                        </div>
+
+                    </div>
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Caronas</span>
+                            <div class="lbl-info">%</div>
+                        </div>
+
+                    </div>
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Uso de Capacete</span>
+                            <div class="lbl-info">%</div>
+                        </div>
+
+                    </div>
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Mulheres</span>
+                            <span class="count-high">33.90%</span>
+                            <div class="lbl-info">8%</div>
+                        </div>
+
+                    </div>
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Crianças e Adolescentes</span>
+                            <div class="lbl-info">1,85%</div>
+                        </div>
+
+                    </div>
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Caronas</span>
+                            <div class="lbl-info">%</div>
+                        </div>
+
+                    </div>
+                    <div class="col col-sm-2 col-md-3 col-lg-4">
+                        <div class="box-counter">
+                            <span class="numbers">Uso de Capacete</span>
+                            <div class="lbl-info">%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-extras-info" class="mb-5 mt-5">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="content-information">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+                            odit nobis rem dolor, ea ratione, inventore dolorem ex ad vitae cumque est tempora veritatis
+                            debitis nostrum odio laudantium illo voluptatem.</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-counter-data-list mt-5">
+            <div id="map" class="map-content"></div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center pt-5 pb-3">
+                        <h3 class="title-section">Veja nossas contagens</h3>
+                        <!-- <h4 class="subtitle-section">filtre por categoria</h4> -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">Data Contagem</th>
+                                    <th class="text-left" scope="col">Local</th>
+                                    <th class="text-center" scope="col">Total de Ciclistas</th>
+                                    <th class="text-right" scope="col">Exportar dados</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" scope="row">25/03/2013</td>
+                                    <td class="text-left">Av. Rui Barbosa x R. Amélia</td>
+                                    <td class="text-center">1431</td>
+                                    <td class="text-right" class="text-right">
+                                        JSON / CSV
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/contagem/" class="btn-see-more">
+                                            <i class="fa fa-search bold"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" scope="row">25/03/2013</td>
+                                    <td class="text-left">Av. Rui Barbosa x R. Amélia</td>
+                                    <td class="text-center">1431</td>
+                                    <td class="text-right" class="text-right">
+                                        JSON / CSV
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/contagem/" class="btn-see-more">
+                                            <i class="fa fa-search bold"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-data-news" class="container-full mt-5 hidden">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center pb-3">
+                        <h3 class="title-section">Mais dados em parceria</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="container-datanews container-full">
+                <div class="item-datanews col col-sm-3">
+                    <div class="box-datanews">
+
+                    </div>
+                </div>
+                <div class="item-datanews col col-sm-3">
+                    <div class="box-datanews">
+
+                    </div>
+                </div>
+                <div class="item-datanews col col-sm-3">
+                    <div class="box-datanews">
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="section-partners" class="mt-5 mb-5">
+            <div class="container">
+                <div class="row  pt-5 pb-5">
+                    <div class="col-12 text-center">
+                        <h3 class="title-section pb-4">Realização</h3>
+                    </div>
+                    <div class="col">
+                        <ul class="list-partners list-inline text-center">
+                            <li class="list-partern-item list-inline-item">
+                                <img src="https://via.placeholder.com/150" alt="">
+                            </li>
+                            <li class="list-partern-item list-inline-item">
+                                <img src="https://via.placeholder.com/150" alt="">
+                            </li>
+                            <li class="list-partern-item list-inline-item">
+                                <img src="https://via.placeholder.com/150" alt="">
+                            </li>
+                            <li class="list-partern-item list-inline-item">
+                                <img src="https://via.placeholder.com/150" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="container-full bg-color-green-dark footer">
+            <div class="container">
+                <div class="row pt-5 pb-5">
+                    <div class="col">
+                        <ul class="list-footer-icons list-inline">
+                            <li class="item-icons list-inline-item">
+                                <a href="https://www.facebook.com/ameciclo" target="_blank" rel="noreferrer noopener"
+                                    class="icon-link">
+                                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="item-icons list-inline-item">
+                                <a href="https://www.facebook.com/ameciclo" target="_blank" rel="noreferrer noopener"
+                                    class="icon-link">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="item-icons list-inline-item">
+                                <a href="https://www.facebook.com/ameciclo" target="_blank" rel="noreferrer noopener"
+                                    class="icon-link">
+                                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="item-icons list-inline-item">
+                                <a href="https://www.facebook.com/ameciclo" target="_blank" rel="noreferrer noopener"
+                                    class="icon-link">
+                                    <i class="fa fa-telegram" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="footer-info">
+                        <div class="company">Ameciclo - Associação Metropolitana de Ciclistas do Recife</div>
+                        <div class="address">R. da Aurora, 529, loja 2 - Santo Amaro Recife/PE, 50050-145</div>
+                        <a href="mailto:contato@ameciclo.org" class="footer-mail">contato@ameciclo.org</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyfight text-center">
+                Ameciclo 2020
+            </div>
+        </footer>
+
+</body>
+
+</html>

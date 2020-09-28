@@ -1,0 +1,143 @@
+body{
+    font-family: 'Ubuntu Condensed', sans-serif;
+    color: $black;
+    overflow-x: hidden;
+
+    &.overflow-y-disabled{
+        overflow-y: hidden;
+    }
+}
+
+a{
+    font-weight: 700;
+
+    &:after{
+        content: '';
+        display: block;
+        background-color: $black;
+    }
+}
+
+.title-couting{
+    font-size: 4em;
+}
+
+.title-graph{
+    font-size: 2em;
+    text-align: center;
+}
+
+.title-section{
+    font-size: 1.5em;
+}
+.hidden{
+    display: none;
+}
+
+.container-datanews{
+    display: flex;
+    
+    .item-datanews{
+        overflow: hidden;
+        // width: 100vw;
+        // height: 100vh;
+        flex: 1;
+        text-align: center;
+        flex-direction: column-reverse;
+
+        &:nth-child(1){
+            background: url('../assets/images/datanews-1.png') no-repeat;
+        }
+
+        &:nth-child(2){
+            background: url('../assets/images/datanews-2.png') no-repeat;
+        }
+
+        &:nth-child(3){
+            background: url('../assets/images/datanews-3.png') no-repeat;
+        }
+    }
+}
+
+.box-counter{
+    margin: 80px 0;
+    .icon{
+        width: 80px;
+        height: 80px;
+        display: block;
+        margin: 0 auto 14px;
+        text-align: center;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    .label-info{
+        font-size: 1.5em;
+        text-align: center;
+        line-height: 14px;
+    }
+
+    .count{
+        font-size: 3em;
+    }
+}
+
+.icon-counters{
+    background: url('/images/icons/abacus.svg');
+}
+
+.icon-bikers{
+    background: url('/images/icons/bike.svg');    
+}
+
+.icon-points{
+    background: url('/images/icons/data.svg');
+}
+
+.icon-maximum{
+    background: url('/images/icons/research.svg');
+}
+
+.input-search{
+    width: 100%;
+    padding: 20px 20px;
+    border-radius: 25px;
+    border: 2px solid #f2f2f2;
+    font-size: 1.2em;
+    transition: .7s;
+    
+    &:focus{
+        border: 2px solid $green-dark;
+    }
+}
+
+.container-search{
+    margin: 80px 0;
+}
+.content-search{
+    position: relative;
+
+    .btn-search{
+        position: absolute;
+        right: 0;
+    }
+}
+
+.banner-home{
+    display: flex;
+    height: 50vh;
+    background-color: $green-dark;
+    color: $white;
+    align-content: center;
+    align-items: center;
+    margin-top: 120px;
+}
+
+.bar-graph-responsive{    
+    margin: 0;
+    
+}
+
+.content-intro{
+    margin: 120px auto;
+}
