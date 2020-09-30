@@ -141,3 +141,14 @@ a{
 .content-intro{
     margin: 120px auto;
 }
+
+.table-counting{
+    tbody{
+        td{
+            &:nth-child(2),
+            &:nth-last-child(){
+                text-align: center;
+            }
+        }
+    }
+}

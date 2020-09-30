@@ -10,25 +10,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/main.css">
 
-    <script src="/js/main.js"></script>
-    <script>
-
-        function getDataCouting() {
-            var urlCouting = "https://api.plataforma.ameciclo.org/contagens/v1/cyclist-count";
-
-            return fetch(urlCouting)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    return data;
-                })
-                .catch(error => console.error(error));
-        }
-    </script>
-
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css ">
+    
 </head>
 
 <body>
@@ -37,8 +21,8 @@
             <div class="row">
                 <div class="hidden-sm col-md-4"></div>
                 <div class="col-6 col-md-4 text-center">
-                    <div class="logo">
-                    </div>
+                    <a href="/" class="logo">
+                    </a>
                 </div>
                 <div class="col-6 col-md-4 text-right">
                     <button class="menu hidden" aria-label="Mobile Menu">
@@ -241,50 +225,47 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 text-center pt-5 pb-3">
-                        <h3 class="title-section">Veja nossas contagens</h3>
+                        <h3 class="title-section pb-5">Veja nossas contagens</h3>
                         <!-- <h4 class="subtitle-section">filtre por categoria</h4> -->
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <table class="table">
+                        <table id="table-counting" class="table table-counting">
                             <thead>
                                 <tr>
-                                    <th class="text-center" scope="col">Data Contagem</th>
-                                    <th class="text-left" scope="col">Local</th>
-                                    <th class="text-center" scope="col">Total de Ciclistas</th>
-                                    <th class="text-right" scope="col">Exportar dados</th>
-                                    <th class="text-center">#</th>
+                                    <th class="data-locations text-left" scope="col">Ponto de Contagem</th>
+                                    <th class="data-date-couting text-center" scope="col">Data Contagem</th>
+                                    <th class="data-totals text-center" scope="col">Total de Ciclistas</th>
+                                    <!-- <th class="data-max text-center" scope="col">Máximo Ciclistas/hora</th>-->
+                                    <th class="data-woman text-center" scope="col">Mulheres (%)</th>
+                                    <!--<th class="data-kids text-center" scope="col">Crianças / Adolescentes (%)</th>
+                                    <th class="data-rides text-center" scope="col">Caronas (%)</th> 
+                                    <th class="data-coordenates text-center" scope="col">Lat/Long</th>-->
+                                    <th class="data-reports text-center" scope="col">Relatório</th>
+                                    <th class="data-files text-center" scope="col">Dados Brutos</th>                                    
+                                    <th class="data-actions text-center">#</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <!-- <tbody>
                                 <tr>
-                                    <td class="text-center" scope="row">25/03/2013</td>
                                     <td class="text-left">Av. Rui Barbosa x R. Amélia</td>
-                                    <td class="text-center">1431</td>
-                                    <td class="text-right" class="text-right">
-                                        JSON / CSV
-                                    </td>
+                                    <td class="text-center" scope="row">25/03/2013</td>                                    
+                                    <td class="text-center" scope="row">1431</td>
+                                    <td class="text-center" scope="row">222</td>
+                                    <td class="text-center" scope="row">5,3%</td>
+                                    <td class="text-center" scope="row">0,0%</td>
+                                    <td class="text-center" scope="row">2,2%</td>
+                                    <td class="text-center" scope="row">-8.045218, -34.4897654</td>
+                                    <td class="text-center" scope="row">Link Relatório</td>
+                                    <td class="text-center" scope="row">Links Dados</td>
                                     <td class="text-center">
                                         <a href="/contagem/" class="btn-see-more">
-                                            <i class="fa fa-search bold"></i>
+                                            <i class="fa fa-search bold color-black"></i>                                            
                                         </a>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center" scope="row">25/03/2013</td>
-                                    <td class="text-left">Av. Rui Barbosa x R. Amélia</td>
-                                    <td class="text-center">1431</td>
-                                    <td class="text-right" class="text-right">
-                                        JSON / CSV
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="/contagem/" class="btn-see-more">
-                                            <i class="fa fa-search bold"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                </tr>                                
+                            </tbody> -->
                         </table>
                     </div>
                 </div>
@@ -392,6 +373,14 @@
             </div>
         </footer>
 
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+        <script src="/js/main.js"></script>
+        <script src="/js/api.js"></script>
+        
 </body>
 
 </html>

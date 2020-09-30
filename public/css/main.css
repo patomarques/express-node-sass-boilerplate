@@ -4,6 +4,9 @@
 .color-green-dark {
   color: #008080; }
 
+.color-black {
+  color: #000 !important; }
+
 .header-content {
   padding: 0;
   position: fixed;
@@ -213,6 +216,9 @@ a {
 
 .content-intro {
   margin: 120px auto; }
+
+.table-counting tbody td:nth-child(2), .table-counting tbody td:nth-last-child() {
+  text-align: center; }
 
 .map-content {
   width: 100vw;
