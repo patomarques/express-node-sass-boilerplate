@@ -2,14 +2,22 @@ $(document).ready(function () {
     var id = "5f6e4ba4a2cbeb001406952d";
     var id2 = "5f6e4ba2a2cbeb001406952c";
 
-    function getDataCouting() {
+    function getDataCoutingDetails() {
+        var id = window.location.href.split('/contagem/')[1];
+
+        if(id === undefined){
+            window.location.href = "/";
+            return;
+        }
+
         var urlCouting = "https://api.plataforma.ameciclo.org/contagens/v1/cyclist-count/" + id;
 
         return fetch(urlCouting)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                console.log('contagem details -> ', data);
                 setDataCountingDOM(data);
+
                 return data;
             })
             .catch(error => console.error(error));
@@ -18,10 +26,13 @@ $(document).ready(function () {
     function setDataCountingDOM(data) {
         console.log(data.date);
         $('.title-couting').html(data.name);
-        $('.date-couting .date-br').html(data.date);
+        $('.date-counting.date-br').html(new Date(data.date).toLocaleDateString());
+
+        // var textInfo = "Contagem realizada na " + data.name + ", no dia " + new Date(data.date).toLocaleDateString() + ".";
+        // $('#section-couting-info .title-section').html(textInfo);
     }
 
-    var dataCounting = getDataCouting();
+    var dataCounting = getDataCoutingDetails();
 
     graph_cyclists_by_hour = document.getElementById('graph_ciclysts_by_hour');
     graph_details_percent = document.getElementById('graph_ciclysts_percent_by_hour');

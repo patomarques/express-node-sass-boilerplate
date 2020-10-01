@@ -10,7 +10,11 @@ router.get('/contagem', (req, res) => {
 });
 
 router.get('/contagem/:id', (req, res) => {
-    res.render('contagem');
+    var id = req.params.id;
+    var data = [];
+
+    console.log('id ->', id);
+    res.render('contagem', data);
 });
 
 module.exports = router;
