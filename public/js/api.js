@@ -13,9 +13,9 @@ function setCoutingTableDOM(data) {
         console.log(index, el);
         table_el.row.add([
             el.name,
-            el.date,
+            new Date(el.date).toLocaleDateString(),
             el.summary.total,
-            el.summary.women_percent,
+            (el.summary.women_percent * 100).toFixed(1) + '%',
             '',
             '',
            '<a href="'+ link_cyclist_count + el._id + '" class="btn-see-more"><i class="fa fa-search bold color-black"></i></a>'

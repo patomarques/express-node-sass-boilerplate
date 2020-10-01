@@ -142,13 +142,16 @@ a{
     margin: 120px auto;
 }
 
-.table-counting{
+.table-counting{    
     tbody{
-        td{
-            &:nth-child(2),
-            &:nth-last-child(){
+        tr{
+            td{
                 text-align: center;
+                &:nth-child(1){
+                    text-align: left;
+                }
             }
         }
+        
     }
 }

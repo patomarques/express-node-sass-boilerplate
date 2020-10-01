@@ -5,8 +5,11 @@ router.get('/', (req, res) => {
     res.render('home')
 });
 
-
 router.get('/contagem', (req, res) => {
+    res.render('contagem');
+});
+
+router.get('/contagem/:id', (req, res) => {
     res.render('contagem');
 });
 

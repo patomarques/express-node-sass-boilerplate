@@ -217,8 +217,10 @@ a {
 .content-intro {
   margin: 120px auto; }
 
-.table-counting tbody td:nth-child(2), .table-counting tbody td:nth-last-child() {
+.table-counting tbody tr td {
   text-align: center; }
+  .table-counting tbody tr td:nth-child(1) {
+    text-align: left; }
 
 .map-content {
   width: 100vw;
