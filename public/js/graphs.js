@@ -2,27 +2,6 @@ $(document).ready(function () {
     var id = "5f6e4ba4a2cbeb001406952d";
     var id2 = "5f6e4ba2a2cbeb001406952c";
 
-    function getDataCoutingDetails() {
-        var id = window.location.href.split('/contagem/')[1];
-
-        if(id === undefined){
-            window.location.href = "/";
-            return;
-        }
-
-        var urlCouting = "https://api.plataforma.ameciclo.org/contagens/v1/cyclist-count/" + id;
-
-        return fetch(urlCouting)
-            .then(response => response.json())
-            .then(data => {
-                console.log('contagem details -> ', data);
-                setDataCountingDOM(data);
-
-                return data;
-            })
-            .catch(error => console.error(error));
-    }
-
     function setDataCountingDOM(data) {
         console.log(data.date);
         $('.title-couting').html(data.name);
@@ -98,6 +77,28 @@ $(document).ready(function () {
         };
 
 
-        Plotly.newPlot(graph_cyclists_by_hour, data, layout);
+        Plotly.newPlot(element, data, layout);
     }
+
+    function getDataCoutingDetails() {
+        var id = window.location.href.split('/contagem/')[1];
+
+        if (id === undefined) {
+            window.location.href = "/";
+            return;
+        }
+
+        var urlCouting = "https://api.plataforma.ameciclo.org/contagens/v1/cyclist-count/" + id;
+
+        return fetch(urlCouting)
+            .then(response => response.json())
+            .then(data => {
+                console.log('contagem details -> ', data);
+                setDataCountingDOM(data);
+
+                return data;
+            })
+            .catch(error => console.error(error));
+    }
+
 });

@@ -7,8 +7,6 @@ function setCoutingTableDOM(data) {
     //var link_cyclist_count = "https://api.plataforma.ameciclo.org/contagens/v1/cyclist-count/";
     var link_cyclist_count = "/contagem/";
 
-    console.log('ta chegando certo o dado -> ', data);
-
     data.forEach(function(el, index){
         console.log(index, el);
         table_el.row.add([
@@ -29,7 +27,6 @@ function getDataCouting() {
     return fetch(urlCouting)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             setCoutingTableDOM(data);    
             return data;
         })
