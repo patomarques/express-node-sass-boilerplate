@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css ">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-md-4 text-right">
-                    <button class="menu" aria-label="Mobile Menu">
+                    <button class="menu hidden" aria-label="Mobile Menu">
                         <span></span>
                     </button>
                 </div>
@@ -88,7 +89,7 @@
                 <div id="graph_ciclysts_by_hour" class="bar-graph-responsive"></div>
             </div>
             <div class="col-12 pt-5">
-                <table id="list-ciclysts-qty-by-hour" class="table text-center">
+                <table id="list-ciclysts-qty-by-hour" class="table stripe text-center table-custom">
                     <thead>
                         <tr>
                             <th class="text-left">Horario Inicio</th>
@@ -109,7 +110,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <th class="text-left">Homens</th>
                             <td>127</td>
                             <td>215</td>
@@ -159,7 +160,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -178,7 +179,7 @@
                 <div id="graph_ciclysts_percent_by_hour" class="bar-graph-responsive"></div>
             </div>
             <div class="col-12 mt-5">
-                <table id="list-ciclysts-qty-by-hour" class="table text-center table-responsive stripe">
+                <table id="list-ciclysts-percent-by-hour" class="table text-center stripe table-custom">
                     <thead>
                         <tr>
                             <th class="text-left">Horario</th>
@@ -198,7 +199,7 @@
                             <th class="text-center" scope="col">19</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <!-- <tbody>
                         <tr>
                             <th class="text-left">Homens</th>
                             <td>127</td>
@@ -250,7 +251,7 @@
                             <td>0%</td>
                             <td>0%</td>
                         </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
@@ -333,8 +334,8 @@
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
         <script src="/js/main.js"></script>
-        <script src="/js/counting.js"></script>
-        <script src="/js/graphs.js">
+        <!-- <script src="/js/graphs.js"></script> -->
+        <script src="/js/loadData.js"></script>
 
         </script>
     </footer>
