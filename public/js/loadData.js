@@ -27,7 +27,6 @@ $(document).ready(function () {
         west_south: 'Oeste-Sul'
     };
 
-
     var el_list_ciclysts_qty_by_hour = $('#list-ciclysts-qty-by-hour');
     var el_list_ciclysts_percent_by_hour = $('#list-ciclysts-percent-by-hour');
 
@@ -50,7 +49,7 @@ $(document).ready(function () {
 
         setDataTableCountingQty(data_table_qty, response);
         setDataTableCountingPercent(data_table_percent, response);
-        
+
         loadGraphs(response);
     });
 
@@ -86,17 +85,15 @@ $(document).ready(function () {
         return "https://api.plataforma.ameciclo.org/contagens/v1/cyclist-count/" + id;
     }
 
-   
-
     function setDataTableCountingQty(el_table, data) {
         var data_qualitative = getDataTableQtyFormatted(data);
-        
-        for(index = 0; index < data_qualitative.length; index++){
+
+        for (index = 0; index < data_qualitative.length; index++) {
             el_table.row.add(data_qualitative[index]).draw(false);
         }
     }
 
-    function getDataTableQtyFormatted(data){
+    function getDataTableQtyFormatted(data) {
         console.log('total -> ', data);
 
         var data_qualitative = data.data.qualitative;
@@ -169,11 +166,62 @@ $(document).ready(function () {
 
     }
 
+    function getQualitativesX(objectList) {
+       var qualitatives = [];
+
+       for(const key in objectList){
+            qualitatives.push(key);
+       }
+       
+       return qualitatives.toString();
+    }
+
+    function getQualitativesY(objectList){
+        var keys = [];
+        for (const key in objectList) {
+            console.log('value increment -> ', Object.values(objectList[key]));
+            keys.push(Object.values(objectList[key]));
+        }
+        return keys.toString();
+    }
+
     function loadBarChartCompare(element, data) {
+        var traces = [];
+        var colors = [
+            '#008080', '#ff0000', '#D3D3D3', '#66b2b2', '#99cccc', '#b2d8d8', '#004040', '#004c4c'
+        ];
+
+        var qualitative = data.data.qualitative;
+
+        var indexQualitative = 0;
+        var keys = getQualitativesX(qualitative);
+
+        for (const key in qualitative) {
+            
+            //values.push(qualitative[key].count_per_hour);
+            // console.log('x', qualitative);
+            // console.log('y', qualitative[key].count_per_hour);
+
+            let trace = {
+                x: getQualitativesX(qualitative[key].count_per_hour),
+                y: getQualitativesY(qualitative[key]),
+                name: key,
+                type: 'bar',
+                marker: {
+                    color: colors[indexQualitative++]
+                }
+            };
+
+            traces.push(trace);            
+        }
+
+        //console.log(keys);
+        console.log('traces ', traces);
+
         var trace1 = {
-            x: ['Mulheres', 'Homens', 'Crianças e Adolescentes'],
-            y: [20, 14, 23],
-            name: 'Horário',
+            x: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+            y: [20, 14, 0, 19, 75, 84, 86, 72, 71, 74, 58, 14, 14, 96],
+            name: 'Mulheres',
             type: 'bar',
             marker: {
                 color: '#008080'
@@ -181,18 +229,29 @@ $(document).ready(function () {
         };
 
         var trace2 = {
-            x: ['Mulheres', 'Homens', 'Crianças e Adolescentes'],
-            y: [12, 18, 29],
-            name: 'Ciclistas',
+            x: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+            y: [20, 14, 0, 19, 75, 84, 86, 72, 71, 74, 58, 14, 14, 96],
+            name: 'Homens',
             type: 'bar',
             marker: {
                 color: '#ff0000'
             }
         };
 
-        var data = [trace1, trace2];
+        var trace3 = {
+            x: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+            y: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            name: 'Crianças e Adolescentes',
+            type: 'bar',
+            marker: {
+                color: '#D3D3D3'
+            }
+        };
 
-        var layout = {
+        //var data = [trace1, trace2, trace3];
+        var data = traces;
+
+        var layout = {  
             barmode: 'stack'
         };
 
