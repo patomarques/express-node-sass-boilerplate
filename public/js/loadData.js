@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    var data_qualitative_name = {
+    var colorsGreen = ['#008080', '#66b2b2', '#003333', '#004c4c', '#006666', '#008080', '#198c8c', '#4ca6a6', '#66b2b2', '#cce5e5'];
+    
+    var dataQualitativeNames = {
         cargo: 'Cargueira',
         child: 'Criança',
         helmet: 'Capacete',
@@ -167,29 +169,31 @@ $(document).ready(function () {
     }
 
     function getQualitativesX(objectList) {
-       var qualitatives = [];
+        var qualitatives = [];
 
-       for(const key in objectList){
-            qualitatives.push(key);
-       }
-       
-       return qualitatives.toString();
+        for (const key in objectList) {
+            //console.log('x -> ', typeof Object.keys(objectList[key].count_per_hour));
+            
+            var indexes = Object.keys(objectList[key].count_per_hour);
+            var result = indexes.map(function (index) { 
+                return parseInt(index, 10); 
+              });
+
+            qualitatives.push(result);
+        }
+
+        return qualitatives;
     }
 
-    function getQualitativesY(objectList){
-        var keys = [];
-        for (const key in objectList) {
-            console.log('value increment -> ', Object.values(objectList[key]));
-            keys.push(Object.values(objectList[key]));
-        }
-        return keys.toString();
+    function getQualitativesY(objectList) {
+        console.log('objectListY ', objectList.count_per_hour);
+        return Object.values(objectList.count_per_hour);        
     }
 
     function loadBarChartCompare(element, data) {
         var traces = [];
-        var colors = [
-            '#008080', '#ff0000', '#D3D3D3', '#66b2b2', '#99cccc', '#b2d8d8', '#004040', '#004c4c'
-        ];
+
+       
 
         var qualitative = data.data.qualitative;
 
@@ -197,62 +201,35 @@ $(document).ready(function () {
         var keys = getQualitativesX(qualitative);
 
         for (const key in qualitative) {
-            
-            //values.push(qualitative[key].count_per_hour);
-            // console.log('x', qualitative);
-            // console.log('y', qualitative[key].count_per_hour);
 
-            let trace = {
-                x: getQualitativesX(qualitative[key].count_per_hour),
+            //console.log(dataQualitativeNames.indexOf(dataQualitativeNames, key));
+            let trace = { 
+                x: keys[0],
                 y: getQualitativesY(qualitative[key]),
                 name: key,
                 type: 'bar',
                 marker: {
-                    color: colors[indexQualitative++]
+                    color: colorsGreen[indexQualitative++]
                 }
             };
 
-            traces.push(trace);            
+            traces.push(trace);
         }
 
         //console.log(keys);
         console.log('traces ', traces);
 
-        var trace1 = {
-            x: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-            y: [20, 14, 0, 19, 75, 84, 86, 72, 71, 74, 58, 14, 14, 96],
-            name: 'Mulheres',
-            type: 'bar',
-            marker: {
-                color: '#008080'
-            }
-        };
-
-        var trace2 = {
-            x: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-            y: [20, 14, 0, 19, 75, 84, 86, 72, 71, 74, 58, 14, 14, 96],
-            name: 'Homens',
-            type: 'bar',
-            marker: {
-                color: '#ff0000'
-            }
-        };
-
-        var trace3 = {
-            x: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-            y: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            name: 'Crianças e Adolescentes',
-            type: 'bar',
-            marker: {
-                color: '#D3D3D3'
-            }
-        };
-
         //var data = [trace1, trace2, trace3];
         var data = traces;
 
-        var layout = {  
-            barmode: 'stack'
+        var layout = {
+            barmode: 'stack',
+            font: {size: 16},
+            legend: {
+                xanchor:"top",
+                yanchor:"center",
+                orientation: 'h'
+            }
         };
 
 
