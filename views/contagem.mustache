@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <div class="lds-ripple"><div></div><div></div></div>
     <header class="header-content">
         <div class="container">
             <div class="row">
@@ -78,7 +79,7 @@
         </div>
     </section>
 
-    <section id="section-graphs" class="container mt-5">
+    <section id="section-graphs" class="container pt-5">
         <div class="row">
             <div class="col text-center">
                 <h2 class="title-graph">Quantidade de ciclistas por hora</h2>
@@ -88,7 +89,7 @@
             <div class="col-12">
                 <div id="graph_ciclysts_by_hour" class="bar-graph-responsive"></div>
             </div>
-            <div class="col-12 pt-5">
+            <div class="col-12 pt-5 hidden">
                 <table id="list-ciclysts-qty-by-hour" class="table stripe text-center table-custom">
                     <thead>
                         <tr>
@@ -165,20 +166,22 @@
                 </table>
             </div>
         </div>
+       
         <div class="row mt-5 pt-5">
-            <div class="col">
+            <div class="col-12">
                 <h2 class="title-graph">% de caracteristicas de acordo com o total</h2>
                 <div id="graph_total_by_percent" class="bar-graph-responsive"></div>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row mt-5">
             <div class="col-12 text-center">
-                <h2 class="title-graph">Ciclistas por hora (%)</h2>
+                <h2 class="title-graph pt-5">Ciclistas por hora (%)</h2>
             </div>
-            <div class="col-12 mt-5">
+            <div class="col-12">
                 <div id="graph_ciclysts_percent_by_hour" class="bar-graph-responsive"></div>
             </div>
-            <div class="col-12 mt-5">
+            <div class="col-12 mt-5 hidden">
                 <table id="list-ciclysts-percent-by-hour" class="table text-center stripe table-custom">
                     <thead>
                         <tr>
@@ -255,6 +258,8 @@
                 </table>
             </div>
         </div>
+
+       
     </section>
 
     <section id="section-partners" class="mt-5 mb-5">

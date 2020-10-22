@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var colorsGreen = ['#008080', '#66b2b2', '#003333', '#004c4c', '#006666', '#008080', '#198c8c', '#4ca6a6', '#66b2b2', '#cce5e5'];
-    
+
     var dataQualitativeNames = {
         cargo: 'Cargueira',
         child: 'Criança',
@@ -27,6 +27,12 @@ $(document).ready(function () {
         west_east: 'Oeste-Leste',
         west_north: 'Oeste-Norte',
         west_south: 'Oeste-Sul'
+    };
+
+    var data_labels_percents = {
+        women_percent: 'Mulheres',
+        children_percent: 'Crianças e Adolescentes',
+        sharing_percent: 'Compartilhado'
     };
 
     var el_list_ciclysts_qty_by_hour = $('#list-ciclysts-qty-by-hour');
@@ -96,8 +102,6 @@ $(document).ready(function () {
     }
 
     function getDataTableQtyFormatted(data) {
-        console.log('total -> ', data);
-
         var data_qualitative = data.data.qualitative;
         var data_formatted = [];
 
@@ -112,7 +116,6 @@ $(document).ready(function () {
             }
 
             data_formatted.push(data_formating);
-            //el_table.row.add(data_formmat).draw(false);
         }
 
         return data_formatted;
@@ -140,7 +143,41 @@ $(document).ready(function () {
         $('.date-counting.date-br').html(new Date(data.date).toLocaleDateString());
     }
 
+    function calculatePercent(ammount){
+        return (ammount * 100).toFixed(1);
+    }
+
     function loadBarChart(element, data) {
+        var traces = [];
+        console.log('data ', data);
+        var qualitative = data.summary;
+
+        var indexQualitative = 0;
+        var keys = getQualitativesX(data.data.qualitative);
+
+        for (const key in qualitative) {
+            console.log('graphic 2 -> ', keys, qualitative[key]);
+
+            if (key != 'total' && key != 'hour_max') {
+
+                let trace = {
+                    x: keys[0],
+                    y: calculatePercent(qualitative[key]),
+                    name: key,
+                    type: 'bar',
+                    marker: {
+                        color: colorsGreen[indexQualitative++]
+                    }
+                };
+
+                traces.push(trace);
+            }
+        }
+
+        console.log('grafico 2 ', traces);
+
+        var data = traces;
+
         var data = [{
             x: ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'],
             y: [11.2, 3.2, 5.6, 9.9, 5.2, 0, 1.8, 1.8, 3.1, 2.7, 8.5, 4.5, 5.5, 8.3],
@@ -150,50 +187,75 @@ $(document).ready(function () {
             }
         }];
 
-        Plotly.newPlot(element, data);
+        var layout = {
+            barmode: 'stack',
+            font: {
+                size: 16
+            },
+            legend: {
+                xanchor: "top",
+                yanchor: "center",
+                orientation: 'h'
+            }
+        };
+
+        Plotly.newPlot(element, data, layout);
     }
 
     function loadBarChartHorizontal(element, data) {
+        console.log('data ', data);
+
+        var keys = [];
+        var percents = [];
+        var percents_text = [];
+
+        const percent = data.summary;
+
+        for (const key in percent) {
+            if (key != 'total' && key != 'hour_max') {
+                keys.push(data_labels_percents[key]);
+
+                let value = percent[key] * 100;
+                value = value.toFixed(1);
+                percents.push(value);
+                percents_text.push(value + '%');
+            }
+        }
+
+        console.log('percents ', percents.reverse());
+        console.log('keys ', keys.reverse());
+
         var data = [{
             type: 'bar',
-            x: [5.3, 0, 9.3, 2.2, 14.7, 5, 25.4, 0],
-            y: ['Mulheres', 'Crianças e adolescentes', 'Capacete', 'Caronas', 'Cargueiras', 'Serviço', 'Contramão', 'Calçada'],
+            x: percents.reverse(),
+            y: keys.reverse(),
+            text: percents_text.reverse(),
+            showlegend: false,
+            textposition: 'auto',
             orientation: 'h',
             marker: {
                 color: '#008080'
             }
         }];
 
-        Plotly.newPlot(element, data);
+        var layout = {
+            barmode: 'stack',
+            font: {
+                size: 16
+            },
+            legend: {
+                xanchor: "top",
+                yanchor: "center",
+                orientation: 'h'
+            }
+        };
 
-    }
+        Plotly.newPlot(element, data, layout);
 
-    function getQualitativesX(objectList) {
-        var qualitatives = [];
-
-        for (const key in objectList) {
-            //console.log('x -> ', typeof Object.keys(objectList[key].count_per_hour));
-            
-            var indexes = Object.keys(objectList[key].count_per_hour);
-            var result = indexes.map(function (index) { 
-                return parseInt(index, 10); 
-              });
-
-            qualitatives.push(result);
-        }
-
-        return qualitatives;
-    }
-
-    function getQualitativesY(objectList) {
-        console.log('objectListY ', objectList.count_per_hour);
-        return Object.values(objectList.count_per_hour);        
     }
 
     function loadBarChartCompare(element, data) {
         var traces = [];
-
-       
 
         var qualitative = data.data.qualitative;
 
@@ -201,9 +263,7 @@ $(document).ready(function () {
         var keys = getQualitativesX(qualitative);
 
         for (const key in qualitative) {
-
-            //console.log(dataQualitativeNames.indexOf(dataQualitativeNames, key));
-            let trace = { 
+            let trace = {
                 x: keys[0],
                 y: getQualitativesY(qualitative[key]),
                 name: key,
@@ -216,23 +276,39 @@ $(document).ready(function () {
             traces.push(trace);
         }
 
-        //console.log(keys);
-        console.log('traces ', traces);
-
-        //var data = [trace1, trace2, trace3];
         var data = traces;
 
         var layout = {
             barmode: 'stack',
-            font: {size: 16},
+            font: {
+                size: 16
+            },
             legend: {
-                xanchor:"top",
-                yanchor:"center",
+                xanchor: "top",
+                yanchor: "center",
                 orientation: 'h'
             }
         };
 
-
         Plotly.newPlot(element, data, layout);
+    }
+
+    function getQualitativesX(objectList) {
+        var qualitatives = [];
+
+        for (const key in objectList) {
+            var indexes = Object.keys(objectList[key].count_per_hour);
+            var result = indexes.map(function (index) {
+                return parseInt(index, 10);
+            });
+
+            qualitatives.push(result);
+        }
+
+        return qualitatives;
+    }
+
+    function getQualitativesY(objectList) {
+        return Object.values(objectList.count_per_hour);
     }
 });
