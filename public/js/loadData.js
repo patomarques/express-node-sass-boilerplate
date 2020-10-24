@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var colorsGreen = ['#008080', '#66b2b2', '#003333', '#004c4c', '#006666', '#008080', '#198c8c', '#4ca6a6', '#66b2b2', '#cce5e5'];
 
-    var dataQualitativeNames = {
+    var dataQualitativeLabels = {
         cargo: 'Cargueira',
         child: 'Criança',
         helmet: 'Capacete',
@@ -9,12 +9,12 @@ $(document).ready(function () {
         sharing_child: 'Carona Criança',
         sharing_men: 'Carona Homem',
         sharing_women: 'Carona Mulher',
-        sidewal: 'Calçada',
+        sidewalk: 'Calçada',
         women: 'Mulher',
         wrong_way: 'Contramão'
     };
 
-    var data_quantity_name = {
+    var dataQuantityLabels = {
         east_north: 'Leste-Norte',
         east_south: 'Leste-Sul',
         east_west: 'Leste-Oeste',
@@ -29,7 +29,7 @@ $(document).ready(function () {
         west_south: 'Oeste-Sul'
     };
 
-    var data_labels_percents = {
+    var dataPercentLabels = {
         women_percent: 'Mulheres',
         children_percent: 'Crianças e Adolescentes',
         sharing_percent: 'Compartilhado'
@@ -39,6 +39,7 @@ $(document).ready(function () {
     var el_list_ciclysts_percent_by_hour = $('#list-ciclysts-percent-by-hour');
 
     var urlCounting = getUrlCoutingDetails();
+
     async function getDataAsync() {
         let response = await fetch(urlCounting).then(response => response.json())
             .then(data => {
@@ -52,6 +53,8 @@ $(document).ready(function () {
     getDataAsync().then(response => {
         setDataCountingDOM(response);
 
+        hideLoading();
+
         var data_table_qty = loadDataTable(el_list_ciclysts_qty_by_hour);
         var data_table_percent = loadDataTable(el_list_ciclysts_percent_by_hour);
 
@@ -60,6 +63,10 @@ $(document).ready(function () {
 
         loadGraphs(response);
     });
+
+    function hideLoading(){
+        $('.overflow-screen').hide();
+    }
 
     function loadGraphs(dataCounting) {
         graph_cyclists_by_hour = document.getElementById('graph_ciclysts_by_hour');
@@ -213,7 +220,7 @@ $(document).ready(function () {
 
         for (const key in percent) {
             if (key != 'total' && key != 'hour_max') {
-                keys.push(data_labels_percents[key]);
+                keys.push(dataPercentLabels[key]);
 
                 let value = percent[key] * 100;
                 value = value.toFixed(1);
@@ -266,7 +273,7 @@ $(document).ready(function () {
             let trace = {
                 x: keys[0],
                 y: getQualitativesY(qualitative[key]),
-                name: key,
+                name: dataQualitativeLabels[key],
                 type: 'bar',
                 marker: {
                     color: colorsGreen[indexQualitative++]
