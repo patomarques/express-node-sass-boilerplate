@@ -16,7 +16,12 @@
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  overflow: hidden;
+  transition: .7s; }
+
+body.scroll-blocked {
+  overflow: hidden !important; }
 
 .lds-roller {
   display: inline-block;
@@ -327,6 +332,10 @@ a {
   .table-custom tbody tr td:first-child {
     text-align: left; }
 
+canvas {
+  width: 100vw;
+  height: 250px; }
+
 .map-content {
   width: 100vw;
   height: 60vh; }
@@ -335,7 +344,8 @@ a {
   width: 100%;
   padding: 50px 0 15px;
   text-align: center;
-  color: #fff; }
+  color: #fff;
+  margin-top: 50px; }
 
 .footer-mail {
   color: #fff;

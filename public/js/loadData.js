@@ -66,6 +66,7 @@ $(document).ready(function () {
 
     function hideLoading(){
         $('.overflow-screen').hide();
+        $('body').removeClass('scroll-blocked');
     }
 
     function loadGraphs(dataCounting) {
@@ -181,8 +182,6 @@ $(document).ready(function () {
             }
         }
 
-        console.log('grafico 2 ', traces);
-
         var data = traces;
 
         var data = [{
@@ -210,8 +209,6 @@ $(document).ready(function () {
     }
 
     function loadBarChartHorizontal(element, data) {
-        console.log('data ', data);
-
         var keys = [];
         var percents = [];
         var percents_text = [];
@@ -220,12 +217,13 @@ $(document).ready(function () {
 
         for (const key in percent) {
             if (key != 'total' && key != 'hour_max') {
+                console.log("dataPercentLabels[key] ", dataPercentLabels[key]);
                 keys.push(dataPercentLabels[key]);
 
                 let value = percent[key] * 100;
                 value = value.toFixed(1);
                 percents.push(value);
-                percents_text.push(value + '%');
+                percents_text.push(dataPercentLabels[key] + ' (' + value + '%)');
             }
         }
 
@@ -236,28 +234,32 @@ $(document).ready(function () {
             type: 'bar',
             x: percents.reverse(),
             y: keys.reverse(),
-            text: percents_text.reverse(),
+            text: percents_text,
             showlegend: false,
             textposition: 'auto',
             orientation: 'h',
             marker: {
-                color: '#008080'
-            }
+                color: '#008080',
+                size: [0, 25, 50, 100],
+            },
+            hoverinfo: 'none',
         }];
 
         var layout = {
-            barmode: 'stack',
+            //barmode: 'stack',
             font: {
-                size: 16
+                size: 14
             },
             legend: {
                 xanchor: "top",
-                yanchor: "center",
+                yanchor: false,
                 orientation: 'h'
             }
         };
 
-        Plotly.newPlot(element, data, layout);
+        var config = {responsive: true}
+
+        Plotly.newPlot(element, data, layout, config);
 
     }
 

@@ -28,9 +28,15 @@ function getDataCouting() {
         .then(response => response.json())
         .then(data => {
             setCoutingTableDOM(data);    
+            hideLoading();
             return data;
         })
         .catch(error => console.error(error));
+}
+
+function hideLoading(){
+    $('.overflow-screen').hide();
+    $('body').removeClass('scroll-blocked');
 }
 
 $(document).ready(function () {

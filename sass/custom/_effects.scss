@@ -5,9 +5,15 @@
     opacity: .9;
     background-color: $black;
     position: relative;
-    display: flex;
+    display: flex; 
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    transition: .7s;
+}
+
+body.scroll-blocked{
+    overflow: hidden !important;
 }
 
 .lds-roller {

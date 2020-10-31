@@ -13,9 +13,18 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css ">
 </head>
 
-<body>
+<body class="scroll-blocked">
     <div class="overflow-screen">
-            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 
     <header class="header-content">
@@ -82,36 +91,36 @@
         </div>
     </section>
 
-    <section id="section-graphs" class="container pt-5">
-        <div class="row">
-            <div class="col text-center">
-                <h2 class="title-graph">Quantidade de ciclistas por hora</h2>
+    <section id="section-graphs" class="container pt-5 mt-5">
+        <div class="row text-center">
+            <div class="col">
+                <h2 class="title-graph pb-5">Quantidade de ciclistas por hora</h2>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="graph_ciclysts_by_hour" class="bar-graph-responsive"></div>
-            </div>
-        </div>
-
-        <div class="row mt-5 pt-5">
-            <div class="col-12">
-                <h2 class="title-graph">% de caracteristicas de acordo com o total</h2>
-                <div id="graph_ciclysts_percent_by_hour" class="bar-graph-responsive"></div>
+        <div class="row text-center">
+            <div class="col">
+                <canvas id="graph_ciclysts_by_hour" class="bar-graph-responsive"></canvas>
             </div>
         </div>
 
-        <div class="row mt-5">
+        <div class="row mt-5 pt-5 text-center">
+            <div class="col-12">
+                <h2 class="title-graph pb-5">% de caracteristicas de acordo com o total</h2>
+                <canvas id="graph_ciclysts_percent_by_hour" class="bar-graph-responsive"></canvas>
+            </div>
+        </div>
+
+        <div class="row mt-5  text-center">
             <div class="col-12 text-center">
-                <h2 class="title-graph pt-5">Ciclistas por hora (%)</h2>
+                <h2 class="title-graph pt-5 pb-5">Ciclistas por hora (%)</h2>
             </div>
             <div class="col-12">
-                <div id="graph_total_by_percent" class="bar-graph-responsive"></div>
+                <canvas id="graph_total_by_percent" class="bar-graph-responsive"></canvas>
             </div>
         </div>
     </section>
 
-    <section id="section-partners" class="mt-5 mb-5">
+    <section id="section-partners" class="mt-5 mb-5 hidden">
         <div class="container">
             <div class="row  pt-5 pb-5">
                 <div class="col-12 text-center">
@@ -186,11 +195,14 @@
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
         <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
+        <script src="/js/utils.js"></script>
         <script src="/js/main.js"></script>
+        <script src="/js/loadDataGraphs.js"></script>
         <!-- <script src="/js/graphs.js"></script> -->
-        <script src="/js/loadData.js"></script>
+        <!-- <script src="/js/loadData.js"></script> -->
 
         </script>
     </footer>
