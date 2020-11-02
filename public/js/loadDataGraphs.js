@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
-    $("html, body").scrollTop(0);
-}, false);
+// document.addEventListener('DOMContentLoaded', function () {
+//     $("html, body").scrollTop(0);
+// }, false);
 
 $(document).ready(function () {
     var colors = ['#008080', '#66b2b2', '#003333', '#004c4c', '#006666', '#008080', '#198c8c', '#4ca6a6', '#66b2b2', '#cce5e5', '#d0deae'];
@@ -98,7 +98,7 @@ $(document).ready(function () {
         var qualitative = data.data.qualitative;
         let index = 0;
 
-        for (const key in qualitative) {            
+        for (const key in qualitative) {
             if (key == 'women' || key == 'child') {
                 var el = {
                     label: dataQualitativeLabels[key],
@@ -117,7 +117,7 @@ $(document).ready(function () {
         var myChart = new Chart(element, {
             type: 'bar',
             data: {
-                labels: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                labels: getCountTimes(data),
                 datasets: datasets
             },
             options: {
@@ -134,15 +134,29 @@ $(document).ready(function () {
     }
 
     function loadBarChartHorizontal(element, data) {
+        var formatted = [];
+        var dataPercent = data.summary;
+        var dataLabels = [];
+
+        for (const el in dataPercent) {
+            if (el == 'women_percent' || el == 'children_percent' || el == 'sharing_percent') {
+                formatted.push(percentFormmat(dataPercent[el]));
+                dataLabels.push(dataPercentLabels[el]);
+            }
+        }
+
+        formatted.push(30.0);
+
         var myBarChart = new Chart(element, {
             type: 'horizontalBar',
+            label: 'Porcentagem',
             data: {
-                labels: ['Mulheres', 'Crianças', 'Capacete', 'Carona', 'Cargueiras', 'Serviço', 'Contra-mão', 'Calçada'],
+                labels: dataLabels,
                 datasets: [{
-                    label: 'Hora',
-                    data: [5.3, 0, 9.3, 2.2, 14.7, 5.0, 25.4, 0],
+                    label: 'Porcentagem',
+                    data: formatted,
                     backgroundColor: [
-                        colors[5], colors[5], colors[5], colors[5], colors[5], colors[5], colors[5], colors[5]
+                        colors[5], colors[5], colors[5]
                     ],
                     borderColor: [
                         colors[0]
@@ -150,41 +164,52 @@ $(document).ready(function () {
                     borderWidth: 1
                 }]
             },
+            labels: {
+                display: false,
+                fontSize: 16,
+                fontColor: '#fff'
+            },
             options: {
+                title: {
+                    display: false
+                },              
+                scaleLabel: {
+                    display: true
+                },
                 scales: {
-                    yAxes: [{
+                    xAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            min: 0,
+                            max: 30,
+                            beginAtZero: true,
+                            mirror: false,
+                            callback: function (value) {
+                                return value + "%";
+                            }
+                        },
+                        scaleLabel: {
+                            display: false,
+                            labelString: "Percentage"
                         }
                     }]
+                },
+                responsive: true,
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                            return label + ': ' + tooltipItem.value + '%';
+                        }
+                    }
                 }
             }
         });
     }
 
     function loadBarChartCompare(element, data) {
-
         var barChartData = {
-            labels: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-            datasets: [{
-                label: 'Crianças e Adolescentes',
-                backgroundColor: colors[9],
-                data: [
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                ]
-            }, {
-                label: 'Mulheres',
-                backgroundColor: colors[10],
-                data: [
-                    16, 7, 7, 9, 4, 0, 1, 1, 2, 2, 4, 6, 6, 8
-                ]
-            }, {
-                label: 'Homens',
-                backgroundColor: colors[0],
-                data: [
-                    127, 215, 117, 82, 73, 90, 54, 56, 62, 73, 86, 127, 138, 55
-                ]
-            }]
+            labels: getCountTimes(data),
+            datasets: getBarChartCompareDataset(data)
         };
 
         window.myBar = new Chart(element, {
@@ -210,5 +235,40 @@ $(document).ready(function () {
             }
         });
     }
-   
+
+    function percentFormmat(value) {
+        return parseFloat((value * 100).toFixed(1));
+    }
+
+    function getCountTimes(data){
+        var qualitative = data.data.qualitative;
+        qualitative = qualitative[Object.keys(qualitative)[0]];
+        qualitative = Object.keys(qualitative.count_per_hour);
+        
+        return qualitative;
+    }
+
+    function getBarChartCompareDataset(data){
+
+        var dataset = [];
+        var percentage = data.data.qualitative;
+        var index = 1;
+
+        for(const value in percentage){
+            if(value == 'child' || value == 'women'){
+                var bar = {
+                    label: dataQualitativeLabels[value],
+                    backgroundColor: colors[index++ * 5],
+                    data: Object.values(percentage[value].count_per_hour)
+                    
+                }
+    
+                dataset.push(bar);
+            }
+           
+        }
+
+        return dataset;
+
+    }
 });
